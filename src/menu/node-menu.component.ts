@@ -6,7 +6,7 @@ import {isLeftButtonClicked, isEscapePressed} from '../common/utils/event.utils'
 
 @Component({
   selector: 'node-menu',
-  styleUrls: ['./node-menu.component.css'],
+  //styleUrls: ['./node-menu.component.css'],
   templateUrl: './node-menu.component.html',
   directives: [CORE_DIRECTIVES]
 })
