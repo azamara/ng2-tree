@@ -5,13 +5,3 @@ typings/
 .publish/
 
 webpack.config.js
-
-*.ts
-*.js.map
-!*.d.ts
-
-src/**/*.ts
-!src/**/*.d.ts
-!src/**/*.js.map
-
-
