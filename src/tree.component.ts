@@ -16,7 +16,7 @@ import {applyNewValueToRenamable, isRenamable, isValueEmpty} from './common/util
 
 @Component({
   selector: 'tree-internal',
-  styleUrls: ['./tree.component.css'],
+  // styleUrls: ['./tree.component.css'],
   templateUrl: './tree.component.html',
   directives: [NodeEditableDirective, TreeInternalComponent, NodeMenuComponent, NodeDraggableDirective, CORE_DIRECTIVES],
 })
