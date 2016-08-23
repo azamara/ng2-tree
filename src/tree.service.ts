@@ -1,4 +1,4 @@
-import {NodeRemovedEvent, NodeRenamedEvent, NodeCreatedEvent, NodeSelectedEvent, NodeMovedEvent} from './tree.types';
+import {NodeRemovedEvent, NodeRenamedEvent, NodeCreatedEvent, NodeSelectedEvent, NodeMovedEvent, NodeFoldedEvent} from './tree.types';
 import {Subject} from 'rxjs/Rx';
 import {Injectable} from '@angular/core';
 
@@ -9,4 +9,5 @@ export class TreeService {
   public nodeRenamed$: Subject<NodeRenamedEvent> = new Subject<NodeRenamedEvent>();
   public nodeCreated$: Subject<NodeCreatedEvent> = new Subject<NodeCreatedEvent>();
   public nodeSelected$: Subject<NodeSelectedEvent> = new Subject<NodeSelectedEvent>();
+  public nodeFolded$: Subject<NodeFoldedEvent> = new Subject<NodeFoldedEvent>();
 }

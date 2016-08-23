@@ -55,4 +55,6 @@ export interface NodeRenamedEvent extends NodeDestructiveEvent {
   oldValue: string | RenamableNode;
 }
 
+export interface NodeFoldedEvent extends NodeEvent {
+}
 

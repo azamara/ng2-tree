@@ -154,6 +154,10 @@ class TreeInternalComponent implements OnInit {
 
   private switchFoldingType(e: any, tree: TreeModel): void {
     this.handleFoldingType(e.target.parentNode.parentNode, tree);
+
+    this.treeService.nodeFolded$.next({
+      node: this.tree
+    });
   }
 
   private getFoldingTypeCssClass(node: TreeModel): string {
@@ -322,6 +326,9 @@ export class TreeComponent implements OnInit {
   @Output()
   private nodeMoved: EventEmitter<any> = new EventEmitter();
 
+  @Output()
+  private nodeFolded: EventEmitter<any> = new EventEmitter();
+
   constructor(@Inject(TreeService) private treeService: TreeService) {
   }
 
@@ -344,6 +351,10 @@ export class TreeComponent implements OnInit {
 
     this.treeService.nodeMoved$.subscribe((e: NodeEvent) => {
       this.nodeMoved.emit(e);
+    });
+
+    this.treeService.nodeFolded$.subscribe((e: NodeEvent) => {
+      this.nodeFolded.emit(e);
     });
   }
 }
