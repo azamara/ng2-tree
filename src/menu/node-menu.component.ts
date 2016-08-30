@@ -50,7 +50,6 @@ export class NodeMenuComponent implements OnInit, OnDestroy {
   private onMenuItemSelected(e: MouseEvent, selectedMenuItem: any): void {
     if (isLeftButtonClicked(e)) {
       this.menuItemSelected.emit({nodeMenuItemAction: selectedMenuItem.action});
-      selectedMenuItem.func('a');
     }
   }
 
