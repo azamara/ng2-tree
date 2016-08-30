@@ -7,7 +7,7 @@ import {TreeService, TreeState} from "../tree.service";
 
 @Component({
   selector: 'node-menu',
-  styleUrls: ['./node-menu.component.css'],
+  //styleUrls: ['./node-menu.component.css'],
   templateUrl: './node-menu.component.html',
   directives: [CORE_DIRECTIVES]
 })
