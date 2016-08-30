@@ -1,6 +1,7 @@
 import {bootstrap} from '@angular/platform-browser-dynamic';
 import {Component} from '@angular/core';
 import {TreeComponent, NodeEvent, TreeModel, RenamableNode} from '../index';
+import {NodeMenuItemAction} from "../src/menu/menu.types";
 
 declare const alertify: any;
 
@@ -12,6 +13,7 @@ declare const alertify: any;
         <p>Fonts tree</p>
         <tree
           [tree]="fonts" 
+          [menuItems]="customMenu"
           (nodeRemoved)="onNodeRemoved($event)"
           (nodeRenamed)="onNodeRenamed($event)"
           (nodeSelected)="onNodeSelected($event)"
@@ -122,6 +124,22 @@ class AppComponent {
       }
     ]
   };
+
+  private customMenu = [
+    {
+      name: 'New Group'
+    },
+    {
+      name: 'Rename',
+      action: NodeMenuItemAction.Rename,
+      cssClass: 'rename'
+    },
+    {
+      name: 'Remove',
+      action: NodeMenuItemAction.Remove,
+      cssClass: 'remove'
+    }
+  ]
 
   private onNodeRemoved(e: NodeEvent): void {
     this.logEvent(e, 'Removed');

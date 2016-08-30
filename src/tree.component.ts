@@ -9,7 +9,7 @@ import {NodeDraggableDirective} from './draggable/node-draggable.directive';
 import {NodeDraggableEventAction, NodeDraggableEvent} from './draggable/draggable.types';
 import {NodeMenuEvent, NodeMenuAction, NodeMenuItemSelectedEvent, NodeMenuItemAction} from './menu/menu.types';
 import {NodeEditableEvent, NodeEditableEventAction} from './editable/editable.type';
-import {TreeService} from './tree.service';
+import {TreeService, TreeState} from './tree.service';
 import {isLeftButtonClicked, isRightButtonClicked} from './common/utils/event.utils';
 import * as _ from 'lodash';
 import {applyNewValueToRenamable, isRenamable, isValueEmpty} from './common/utils/type.utils';
@@ -41,6 +41,7 @@ class TreeInternalComponent implements OnInit {
     @Inject(NodeMenuService) private nodeMenuService: NodeMenuService,
     @Inject(NodeDraggableService) private nodeDraggableService: NodeDraggableService,
     @Inject(TreeService) private treeService: TreeService,
+    @Inject(TreeState) private treeState: TreeState,
     @Inject(ElementRef) private element: ElementRef) {
   }
 
@@ -303,13 +304,16 @@ class TreeInternalComponent implements OnInit {
 
 @Component({
   selector: 'tree',
-  providers: [NodeMenuService, NodeDraggableService, TreeService],
+  providers: [NodeMenuService, NodeDraggableService, TreeService, TreeState],
   template: `<tree-internal [tree]="tree"></tree-internal>`,
   directives: [TreeInternalComponent]
 })
 export class TreeComponent implements OnInit {
   @Input()
   private tree: TreeModel;
+
+  @Input()
+  private menuItems: any;
 
   @Output()
   private nodeCreated: EventEmitter<any> = new EventEmitter();
@@ -329,10 +333,32 @@ export class TreeComponent implements OnInit {
   @Output()
   private nodeFolded: EventEmitter<any> = new EventEmitter();
 
-  constructor(@Inject(TreeService) private treeService: TreeService) {
+  private defaultMenuItems: any = [
+    {
+      name: 'New folder',
+      action: NodeMenuItemAction.NewFolder,
+      cssClass: 'new-folder'
+    },
+    {
+      name: 'Rename',
+      action: NodeMenuItemAction.Rename,
+      cssClass: 'rename'
+    },
+    {
+      name: 'Remove',
+      action: NodeMenuItemAction.Remove,
+      cssClass: 'remove'
+    }
+  ];
+
+  constructor(@Inject(TreeService) private treeService: TreeService,
+              @Inject(TreeState) private treeState: TreeState) {
   }
 
   public ngOnInit(): void {
+
+    this.treeState.menuItems = _.merge( this.defaultMenuItems, this.menuItems );
+
     this.treeService.nodeRemoved$.subscribe((e: NodeEvent) => {
       this.nodeRemoved.emit(e);
     });

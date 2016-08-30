@@ -1,25 +1,24 @@
-import {Component, EventEmitter, Output, Renderer, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Output, Renderer, Inject, OnDestroy, OnInit, Input} from '@angular/core';
 import {CORE_DIRECTIVES} from '@angular/common';
 import {NodeMenuService} from './node-menu.service';
 import {NodeMenuItemSelectedEvent, NodeMenuItemAction, NodeMenuEvent, NodeMenuAction} from './menu.types';
 import {isLeftButtonClicked, isEscapePressed} from '../common/utils/event.utils';
+import {TreeService, TreeState} from "../tree.service";
 
 @Component({
   selector: 'node-menu',
-  //styleUrls: ['./node-menu.component.css'],
+  styleUrls: ['./node-menu.component.css'],
   templateUrl: './node-menu.component.html',
   directives: [CORE_DIRECTIVES]
 })
 export class NodeMenuComponent implements OnInit, OnDestroy {
+
+  public menuItems:any;
+
   @Output()
   private menuItemSelected: EventEmitter<NodeMenuItemSelectedEvent> = new EventEmitter<NodeMenuItemSelectedEvent>();
 
   private availableMenuItems: NodeMenuItem[] = [
-    {
-      name: 'New tag',
-      action: NodeMenuItemAction.NewTag,
-      cssClass: 'new-tag'
-    },
     {
       name: 'New folder',
       action: NodeMenuItemAction.NewFolder,
@@ -41,12 +40,17 @@ export class NodeMenuComponent implements OnInit, OnDestroy {
 
   public constructor(
     @Inject(Renderer) private renderer: Renderer,
-    @Inject(NodeMenuService) private nodeMenuService: NodeMenuService) {
+    @Inject(NodeMenuService) private nodeMenuService: NodeMenuService,
+    @Inject(TreeState) private treeState: TreeState,
+    ) {
+    this.menuItems = treeState.menuItems;
+    console.log(this.menuItems);
   }
 
-  private onMenuItemSelected(e: MouseEvent, selectedMenuItem: NodeMenuItem): void {
+  private onMenuItemSelected(e: MouseEvent, selectedMenuItem: any): void {
     if (isLeftButtonClicked(e)) {
       this.menuItemSelected.emit({nodeMenuItemAction: selectedMenuItem.action});
+      selectedMenuItem.func('a');
     }
   }
 

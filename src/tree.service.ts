@@ -11,3 +11,8 @@ export class TreeService {
   public nodeSelected$: Subject<NodeSelectedEvent> = new Subject<NodeSelectedEvent>();
   public nodeFolded$: Subject<NodeFoldedEvent> = new Subject<NodeFoldedEvent>();
 }
+
+@Injectable()
+export class TreeState {
+  public menuItems: any;
+}

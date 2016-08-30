@@ -1,6 +1,6 @@
 <div class="node-menu">
   <ul class="node-menu-content">
-    <li class="node-menu-item" *ngFor="let menuItem of availableMenuItems"
+    <li class="node-menu-item" *ngFor="let menuItem of menuItems"
         (click)="onMenuItemSelected($event, menuItem)">
       <div class="node-menu-item-icon {{menuItem.cssClass}}"></div>
       <span class="node-menu-item-value">{{menuItem.name}}</span>
